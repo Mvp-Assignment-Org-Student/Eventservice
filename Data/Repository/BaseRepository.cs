@@ -145,7 +145,7 @@ public abstract class BaseRepository<TEntity> : IBaseRepository<TEntity> where T
     {
         try
         {
-            _table.Attach(entity); // Viktigt!
+            _table.Attach(entity);
             _table.Remove(entity);
 
             await _context.SaveChangesAsync();

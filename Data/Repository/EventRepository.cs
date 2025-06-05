@@ -64,7 +64,6 @@ public class EventRepository(DataContext context) : BaseRepository<EventEntity>(
     {
         try
         {
-            // Hämta från databasen först!
             var existingEntity = await _context.Events.FindAsync(entity.Id);
 
             if (existingEntity == null)
