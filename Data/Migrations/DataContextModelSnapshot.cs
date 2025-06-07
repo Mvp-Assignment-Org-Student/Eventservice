@@ -106,7 +106,7 @@ namespace Data.Migrations
                         .IsRequired();
 
                     b.HasOne("Data.Entities.PackageEntity", "Package")
-                        .WithMany()
+                        .WithMany("Events")
                         .HasForeignKey("PackageId");
 
                     b.Navigation("Event");
@@ -117,6 +117,11 @@ namespace Data.Migrations
             modelBuilder.Entity("Data.Entities.EventEntity", b =>
                 {
                     b.Navigation("Packages");
+                });
+
+            modelBuilder.Entity("Data.Entities.PackageEntity", b =>
+                {
+                    b.Navigation("Events");
                 });
 #pragma warning restore 612, 618
         }

@@ -1,3 +1,4 @@
+using Azure.Identity;
 using Business.Interfaces;
 using Business.Services;
 using Data.Contexts;
@@ -7,6 +8,9 @@ using Microsoft.EntityFrameworkCore;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 var builder = WebApplication.CreateBuilder(args);
+var keyVaultUrl = new Uri("https://keyvault-mvp-student.vault.azure.net/");
+builder.Configuration.AddAzureKeyVault(keyVaultUrl, new DefaultAzureCredential());
+Console.WriteLine("DB Conn: " + builder.Configuration["AzureDbConnection"]);
 
 builder.Services.AddControllers();
 builder.Services.AddOpenApi();
@@ -14,9 +18,9 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<IEventService, EventService>();
 builder.Services.AddScoped<IEventRepository, EventRepository>();
-builder.Services.AddDbContext<DataContext>(x =>     x.UseSqlServer(builder.Configuration.GetConnectionString("AzureDbConnection")));
+builder.Services.AddDbContext<DataContext>(x =>
+    x.UseSqlServer(builder.Configuration["AzureDbConnection"])); 
 
-// MÅSTE PUBLICERA OCJ LADDA UPP TILL DB TILL AZURE
 
 
 

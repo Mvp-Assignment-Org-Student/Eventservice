@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20250522075251_init")]
-    partial class init
+    [Migration("20250607112404_AzureInit")]
+    partial class AzureInit
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -109,7 +109,7 @@ namespace Data.Migrations
                         .IsRequired();
 
                     b.HasOne("Data.Entities.PackageEntity", "Package")
-                        .WithMany()
+                        .WithMany("Events")
                         .HasForeignKey("PackageId");
 
                     b.Navigation("Event");
@@ -120,6 +120,11 @@ namespace Data.Migrations
             modelBuilder.Entity("Data.Entities.EventEntity", b =>
                 {
                     b.Navigation("Packages");
+                });
+
+            modelBuilder.Entity("Data.Entities.PackageEntity", b =>
+                {
+                    b.Navigation("Events");
                 });
 #pragma warning restore 612, 618
         }
